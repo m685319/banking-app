@@ -38,4 +38,5 @@ public class AccountController {
     public ResponseEntity<Account> withdraw(@PathVariable Long id, @RequestParam Double amount) {
         return ResponseEntity.ok(accountService.withdraw(id, amount));
     }
+
 }
