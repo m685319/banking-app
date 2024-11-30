@@ -2,6 +2,7 @@ package com.example.bankingapp.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -19,6 +20,6 @@ public class AccountDTO {
     @Size(min = 2, max = 50)
     private String name;
 
-    @Positive
-    private Double balance = 0.0;
+    @PositiveOrZero(message = "Balance must be zero or positive")
+    private Double balance;
 }

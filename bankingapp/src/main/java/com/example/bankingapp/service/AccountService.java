@@ -48,7 +48,7 @@ public class AccountService {
     /**
      * Deposits a specified amount into the account.
      *
-     * @param id the ID of the account.
+     * @param id     the ID of the account.
      * @param amount the amount to deposit.
      * @throws EntityNotFoundException if no account is found with the given ID.
      */
@@ -66,9 +66,9 @@ public class AccountService {
     /**
      * Withdraws a specified amount from the account.
      *
-     * @param id the ID of the account.
+     * @param id     the ID of the account.
      * @param amount the amount to withdraw.
-     * @throws EntityNotFoundException if no account is found with the given ID.
+     * @throws EntityNotFoundException    if no account is found with the given ID.
      * @throws InsufficientFundsException if the account has insufficient funds.
      */
     @Transactional
@@ -101,19 +101,26 @@ public class AccountService {
     /**
      * Updates an existing account.
      *
+     * @param id         account id
      * @param accountDTO the updated account data.
      * @return the updated account as a DTO.
      * @throws EntityNotFoundException if no account is found with the given ID.
      */
     @Transactional
-    public AccountDTO updateAccount(AccountDTO accountDTO) {
-        log.debug("Updating account with ID: {} to new values: {}", accountDTO.getId(), accountDTO);
-        Account persistedAccount = findAccountById(accountDTO.getId());
-        persistedAccount.setName(accountDTO.getName());
-        persistedAccount.setBalance(accountDTO.getBalance());
-        persistedAccount.setAccountNumber(accountDTO.getAccountNumber());
-        persistedAccount = accountRepository.save(persistedAccount);
-        return accountMapper.toDTO(persistedAccount);
+    public AccountDTO updateAccount(Long id, AccountDTO accountDTO) {
+        log.debug("Updating account with ID: {} to new values: {}", id, accountDTO);
+        Account storedAccount = findAccountById(id);
+        if (accountDTO.getName() != null) {
+            storedAccount.setName(accountDTO.getName());
+        }
+        if (accountDTO.getBalance() != null) {
+            storedAccount.setBalance(accountDTO.getBalance());
+        }
+        if (accountDTO.getAccountNumber() != null) {
+            storedAccount.setAccountNumber(accountDTO.getAccountNumber());
+        }
+        storedAccount = accountRepository.save(storedAccount);
+        return accountMapper.toDTO(storedAccount);
     }
 
     /**

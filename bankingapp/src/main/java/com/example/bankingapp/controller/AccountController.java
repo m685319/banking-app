@@ -43,10 +43,10 @@ public class AccountController {
         return accountService.getAccount(id);
     }
 
-    @PutMapping
-    public AccountDTO updateAccount(@Valid @RequestBody AccountDTO accountDTO) {
-        log.debug("Updating account: {}", accountDTO);
-        return accountService.updateAccount(accountDTO);
+    @PutMapping("/{id}")
+    public AccountDTO updateAccount(@PathVariable Long id, @RequestBody AccountDTO accountDTO) {
+        log.debug("Updating account with ID: {} and details: {}", id, accountDTO);
+        return accountService.updateAccount(id, accountDTO);
     }
 
     @PutMapping("/{id}/deposit")
